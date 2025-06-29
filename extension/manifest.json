@@ -1,0 +1,18 @@
+{
+  "manifest_version": 3,
+  "name": "AI-Powered Iframe Data Scraper",
+  "version": "1.0",
+  "description": "Scrapes data from iframes and displays in popup and extracts Data using AI",
+  "permissions": ["activeTab", "storage", "scripting"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Iframe Scraper"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "all_frames": true
+    }
+  ]
+}

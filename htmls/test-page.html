@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iframe Scraper Test Page</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background: #f5f5f5;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+      .iframe-container {
+        margin: 20px 0;
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .iframe-label {
+        background: #333;
+        color: white;
+        padding: 10px;
+        font-weight: bold;
+      }
+      iframe {
+        width: 100%;
+        height: 300px;
+        border: none;
+      }
+      .controls {
+        margin: 20px 0;
+        padding: 15px;
+        background: #e9ecef;
+        border-radius: 5px;
+      }
+      button {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 5px;
+      }
+      button:hover {
+        background: #0056b3;
+      }
+      .results {
+        margin-top: 20px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 5px;
+        min-height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔍 Iframe Scraper Test Page</h1>
+      <p>This page contains various iframes to test the scraper extension.</p>
+
+      <div class="controls">
+        <h3>Test Controls</h3>
+        <button onclick="addDynamicIframe()">Add Dynamic Iframe</button>
+        <button onclick="testPostMessage()">Test PostMessage</button>
+        <button onclick="showResults()">Show Results</button>
+        <button onclick="clearResults()">Clear Results</button>
+      </div>
+
+      <!-- Same-origin iframe -->
+      <div class="iframe-container">
+        <div class="iframe-label">Same-Origin Iframe (test-iframe.html)</div>
+        <iframe src="test-iframe.html" id="same-origin-iframe"></iframe>
+      </div>
+
+      <!-- Data URL iframe -->
+      <div class="iframe-container">
+        <div class="iframe-label">Data URL Iframe</div>
+        <iframe
+          src="data:text/html,<html><body><h1>Data URL Content</h1><p>This is content from a data URL iframe.</p><ul><li>Item 1</li><li>Item 2</li></ul></body></html>"
+          id="data-iframe"
+        ></iframe>
+      </div>
+
+      <!-- External iframe (for testing cross-origin) -->
+      <div class="iframe-container">
+        <div class="iframe-label">External Iframe (httpbin.org)</div>
+        <iframe src="https://httpbin.org/html" id="external-iframe"></iframe>
+      </div>
+
+      <!-- Authentication test iframe -->
+      <div class="iframe-container">
+        <div class="iframe-label">Auth Test Iframe</div>
+        <iframe src="auth-test.html" id="auth-iframe"></iframe>
+      </div>
+
+      <div class="results" id="results">
+        <h3>Test Results</h3>
+        <p>Results will appear here...</p>
+      </div>
+    </div>
+
+    <script>
+      let dynamicIframeCount = 0;
+
+      function addDynamicIframe() {
+        dynamicIframeCount++;
+        const container = document.createElement("div");
+        container.className = "iframe-container";
+        container.innerHTML = `
+                <div class="iframe-label">Dynamic Iframe ${dynamicIframeCount}</div>
+                <iframe src="data:text/html,<html><body><h2>Dynamic Iframe ${dynamicIframeCount}</h2><p>This iframe was added dynamically at ${new Date().toLocaleTimeString()}</p><div id='content'>Dynamic content here</div></body></html>" id="dynamic-iframe-${dynamicIframeCount}"></iframe>
+            `;
+
+        document
+          .querySelector(".container")
+          .insertBefore(container, document.getElementById("results"));
+        logResult(`Added dynamic iframe ${dynamicIframeCount}`);
+      }
+
+      function testPostMessage() {
+        const iframes = document.querySelectorAll("iframe");
+        iframes.forEach((iframe, index) => {
+          try {
+            iframe.contentWindow.postMessage(
+              {
+                type: "test-message",
+                data: `Test message ${index}`,
+                timestamp: Date.now(),
+              },
+              "*"
+            );
+            logResult(`Sent postMessage to iframe ${index}`);
+          } catch (error) {
+            logResult(
+              `Failed to send postMessage to iframe ${index}: ${error.message}`
+            );
+          }
+        });
+      }
+
+      function showResults() {
+        const iframes = document.querySelectorAll("iframe");
+        logResult(`Found ${iframes.length} iframes on page:`);
+
+        iframes.forEach((iframe, index) => {
+          logResult(
+            `Iframe ${index}: ${iframe.src || "No src"} (ID: ${
+              iframe.id || "No ID"
+            })`
+          );
+        });
+      }
+
+      function clearResults() {
+        document.getElementById("results").innerHTML =
+          "<h3>Test Results</h3><p>Results cleared...</p>";
+      }
+
+      function logResult(message) {
+        const results = document.getElementById("results");
+        const timestamp = new Date().toLocaleTimeString();
+        results.innerHTML += `<div>[${timestamp}] ${message}</div>`;
+        results.scrollTop = results.scrollHeight;
+      }
+
+      // Listen for messages from iframes
+      window.addEventListener("message", function (event) {
+        logResult(
+          `Received message from ${event.origin}: ${JSON.stringify(event.data)}`
+        );
+      });
+
+      // Initialize
+      document.addEventListener("DOMContentLoaded", function () {
+        logResult("Test page loaded successfully");
+        logResult(
+          "Extension should be able to detect and scrape the iframes above"
+        );
+      });
+    </script>
+  </body>
+</html>

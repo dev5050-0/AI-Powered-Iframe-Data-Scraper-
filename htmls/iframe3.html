@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hospital Patient Summary</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background-color: #eef2f5;
+        color: #2c3e50;
+        display: flex;
+        height: 100vh;
+      }
+
+      .sidebar {
+        width: 220px;
+        background-color: #2d3436;
+        color: white;
+        padding: 2rem 1rem;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .sidebar h2 {
+        margin: 0 0 2rem;
+        font-size: 20px;
+        text-align: center;
+        border-bottom: 1px solid #444;
+        padding-bottom: 1rem;
+      }
+
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .sidebar li {
+        margin: 1rem 0;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+      }
+
+      .sidebar li:hover {
+        background-color: #636e72;
+      }
+
+      .main-content {
+        flex: 1;
+        padding: 2rem;
+        overflow-y: auto;
+      }
+
+      .section {
+        background-color: white;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+
+      .section h3 {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 0.5rem;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      .grid div {
+        margin-bottom: 0.5rem;
+      }
+
+      .label {
+        font-weight: bold;
+        display: block;
+        color: #555;
+      }
+
+      .value {
+        margin-top: 0.25rem;
+      }
+
+      ul {
+        padding-left: 1.2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <aside class="sidebar">
+      <h2>Patient Panel</h2>
+      <ul>
+        <li>Overview</li>
+        <li>Vitals</li>
+        <li>Diagnosis</li>
+        <li>Medications</li>
+        <li>History</li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <div class="section">
+        <h3>Patient Overview</h3>
+        <div class="grid">
+          <div>
+            <span class="label">Name</span>
+            <div class="value">Jane Smith</div>
+          </div>
+          <div>
+            <span class="label">Age</span>
+            <div class="value">36</div>
+          </div>
+          <div>
+            <span class="label">Gender</span>
+            <div class="value">Female</div>
+          </div>
+          <div>
+            <span class="label">Patient ID</span>
+            <div class="value">HS9087321</div>
+          </div>
+          <div>
+            <span class="label">Room No.</span>
+            <div class="value">B202</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Vitals</h3>
+        <div class="grid">
+          <div>
+            <span class="label">Temperature</span>
+            <div class="value">99.1°F</div>
+          </div>
+          <div>
+            <span class="label">Pulse</span>
+            <div class="value">84 bpm</div>
+          </div>
+          <div>
+            <span class="label">Blood Pressure</span>
+            <div class="value">122/76 mmHg</div>
+          </div>
+          <div>
+            <span class="label">SpO2</span>
+            <div class="value">97%</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h3>Diagnosis</h3>
+        <p>
+          Patient diagnosed with acute sinusitis and mild dehydration. CT scan
+          showed minor sinus cavity inflammation. No signs of bacterial
+          infection. Responding well to fluids and rest.
+        </p>
+      </div>
+
+      <div class="section">
+        <h3>Medications</h3>
+        <ul>
+          <li>Amoxicillin 500mg – Twice a day</li>
+          <li>Ibuprofen 400mg – As needed for pain</li>
+          <li>Saline Nasal Spray – Twice daily</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3>Medical History</h3>
+        <p>
+          No chronic illness. History of seasonal flu. Allergic to penicillin.
+          Non-smoker, drinks occasionally. Vaccination up to date.
+        </p>
+      </div>
+    </main>
+  </body>
+</html>

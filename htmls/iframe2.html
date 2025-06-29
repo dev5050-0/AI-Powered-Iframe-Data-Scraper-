@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Patient Summary</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 2rem;
+        background-color: #f9f9f9;
+        color: #333;
+      }
+
+      .summary-container {
+        max-width: 800px;
+        margin: auto;
+        background-color: #fff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+      }
+
+      h1,
+      h2 {
+        margin-bottom: 0.5rem;
+      }
+
+      .section {
+        margin-bottom: 2rem;
+      }
+
+      .label {
+        font-weight: bold;
+      }
+
+      .row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.5rem;
+      }
+
+      .divider {
+        height: 1px;
+        background-color: #ddd;
+        margin: 1.5rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="summary-container">
+      <h1>Patient Summary</h1>
+      <div class="section">
+        <h2>Patient Details</h2>
+        <div class="row">
+          <span class="label">Name:</span> <span>John Doe</span>
+        </div>
+        <div class="row"><span class="label">Age:</span> <span>42</span></div>
+        <div class="row">
+          <span class="label">Gender:</span> <span>Male</span>
+        </div>
+        <div class="row">
+          <span class="label">Patient ID:</span> <span>PT12345678</span>
+        </div>
+        <div class="row">
+          <span class="label">Admission Date:</span> <span>2025-06-10</span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <h2>Vitals</h2>
+        <div class="row">
+          <span class="label">Heart Rate:</span> <span>78 bpm</span>
+        </div>
+        <div class="row">
+          <span class="label">Blood Pressure:</span> <span>120/80 mmHg</span>
+        </div>
+        <div class="row">
+          <span class="label">Temperature:</span> <span>98.6°F</span>
+        </div>
+        <div class="row">
+          <span class="label">Oxygen Saturation:</span> <span>98%</span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <h2>Diagnosis</h2>
+        <p>
+          Patient presents with symptoms of mild pneumonia. No signs of acute
+          respiratory distress. Chest X-ray shows minor infiltrates in the lower
+          lobes.
+        </p>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <h2>Medications</h2>
+        <ul>
+          <li>Azithromycin 500mg once daily</li>
+          <li>Paracetamol 650mg as needed for fever</li>
+          <li>Salbutamol Inhaler – 2 puffs every 6 hours</li>
+        </ul>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="section">
+        <h2>History</h2>
+        <p>
+          Patient has a history of mild asthma and seasonal allergies. No prior
+          hospitalizations. Non-smoker, no alcohol use.
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

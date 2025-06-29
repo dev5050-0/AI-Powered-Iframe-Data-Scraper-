@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Authentication Test Page</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background: #f8f9fa;
+      }
+      .auth-container {
+        max-width: 400px;
+        margin: 0 auto;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+      .login-form {
+        display: block;
+      }
+      .protected-content {
+        display: none;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #333;
+      }
+      input[type="text"],
+      input[type="password"],
+      input[type="email"] {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+      input[type="text"]:focus,
+      input[type="password"]:focus,
+      input[type="email"]:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+      }
+      .btn {
+        width: 100%;
+        padding: 12px;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background 0.3s;
+      }
+      .btn:hover {
+        background: #0056b3;
+      }
+      .btn-logout {
+        background: #dc3545;
+        margin-top: 10px;
+      }
+      .btn-logout:hover {
+        background: #c82333;
+      }
+      .error {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+      .success {
+        color: #28a745;
+        font-size: 14px;
+        margin-top: 5px;
+      }
+      .auth-header {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .auth-header h1 {
+        color: #333;
+        margin-bottom: 10px;
+      }
+      .auth-header p {
+        color: #666;
+        margin: 0;
+      }
+      .protected-data {
+        background: #e9ecef;
+        padding: 20px;
+        border-radius: 8px;
+        margin: 20px 0;
+      }
+      .data-item {
+        margin: 10px 0;
+        padding: 10px;
+        background: white;
+        border-radius: 5px;
+        border-left: 4px solid #007bff;
+      }
+      .session-info {
+        background: #d4edda;
+        border: 1px solid #c3e6cb;
+        color: #155724;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 15px 0;
+      }
+      .token-display {
+        font-family: monospace;
+        background: #f8f9fa;
+        padding: 10px;
+        border-radius: 3px;
+        word-break: break-all;
+        font-size: 12px;
+      }
+      .user-profile {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #007bff;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: bold;
+        margin-right: 15px;
+      }
+      .user-info h3 {
+        margin: 0;
+        color: #333;
+      }
+      .user-info p {
+        margin: 5px 0 0 0;
+        color: #666;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="auth-container">
+      <!-- Login Form -->
+      <div id="loginForm" class="login-form">
+        <div class="auth-header">
+          <h1>🔐 Secure Login</h1>
+          <p>This page simulates authentication for testing iframe scraping</p>
+        </div>
+
+        <form id="authForm">
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              placeholder="Enter username"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter email"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter password"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn">Login</button>
+
+          <div id="loginError" class="error" style="display: none"></div>
+          <div id="loginSuccess" class="success" style="display: none"></div>
+        </form>
+
+        <div
+          style="
+            margin-top: 20px;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 5px;
+            font-size: 12px;
+          "
+        >
+          <strong>Test Credentials:</strong><br />
+          Username: testuser<br />
+          Email: test@example.com<br />
+          Password: password123
+        </div>
+      </div>
+
+      <!-- Protected Content (shown after login) -->
+      <div id="protectedContent" class="protected-content">
+        <div class="auth-header">
+          <h1>🎉 Welcome to Protected Area</h1>
+          <p>You have successfully authenticated</p>
+        </div>
+
+        <div class="user-profile">
+          <div class="avatar" id="userAvatar">U</div>
+          <div class="user-info">
+            <h3 id="displayName">Test User</h3>
+            <p id="displayEmail">test@example.com</p>
+          </div>
+        </div>
+
+        <div class="session-info">
+          <strong>Session Information:</strong><br />
+          Session ID: <span id="sessionId" class="token-display"></span><br />
+          Login Time: <span id="loginTime"></span><br />
+          Expires: <span id="expiryTime"></span>
+        </div>
+
+        <div class="protected-data">
+          <h3>🔒 Protected Data</h3>
+          <p>
+            This content is only visible to authenticated users and should be
+            scrapable by the extension.
+          </p>
+
+          <div class="data-item">
+            <strong>User ID:</strong> <span id="userId">12345</span>
+          </div>
+
+          <div class="data-item"><strong>Account Type:</strong> Premium</div>
+
+          <div class="data-item">
+            <strong>Last Login:</strong> <span id="lastLogin"></span>
+          </div>
+
+          <div class="data-item">
+            <strong>Permissions:</strong>
+            <ul>
+              <li>Read Access</li>
+              <li>Write Access</li>
+              <li>Admin Access</li>
+            </ul>
+          </div>
+
+          <div class="data-item">
+            <strong>API Token:</strong>
+            <div class="token-display" id="apiToken">
+              eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IlRlc3QgVXNlciIsImlhdCI6MTUxNjIzOTAyMn0.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+            </div>
+          </div>
+
+          <div class="data-item">
+            <strong>Recent Activity:</strong>
+            <ul id="activityList">
+              <li>Logged in from Chrome Browser</li>
+              <li>Accessed dashboard</li>
+              <li>Updated profile settings</li>
+            </ul>
+          </div>
+
+          <div class="data-item">
+            <strong>Account Settings:</strong>
+            <table style="width: 100%; border-collapse: collapse">
+              <tr>
+                <td style="padding: 5px; border: 1px solid #ddd">
+                  Two-Factor Auth
+                </td>
+                <td style="padding: 5px; border: 1px solid #ddd">✅ Enabled</td>
+              </tr>
+              <tr>
+                <td style="padding: 5px; border: 1px solid #ddd">
+                  Email Notifications
+                </td>
+                <td style="padding: 5px; border: 1px solid #ddd">✅ Enabled</td>
+              </tr>
+              <tr>
+                <td style="padding: 5px; border: 1px solid #ddd">
+                  Privacy Mode
+                </td>
+                <td style="padding: 5px; border: 1px solid #ddd">
+                  ❌ Disabled
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+        <button onclick="logout()" class="btn btn-logout">Logout</button>
+      </div>
+    </div>
+
+    <script>
+      // Simulate authentication state
+      let isAuthenticated = false;
+      let sessionData = {};
+
+      // Check for existing session on page load
+      document.addEventListener("DOMContentLoaded", function () {
+        checkExistingSession();
+        setupFormHandlers();
+      });
+
+      function checkExistingSession() {
+        // Check for session cookie or localStorage
+        const sessionToken = localStorage.getItem("auth_token");
+        const sessionExpiry = localStorage.getItem("auth_expiry");
+
+        if (sessionToken && sessionExpiry) {
+          const now = new Date().getTime();
+          const expiry = parseInt(sessionExpiry);
+
+          if (now < expiry) {
+            // Valid session exists
+            const userData = JSON.parse(
+              localStorage.getItem("user_data") || "{}"
+            );
+            showProtectedContent(userData);
+            return;
+          }
+        }
+
+        // No valid session, show login form
+        showLoginForm();
+      }
+
+      function setupFormHandlers() {
+        const authForm = document.getElementById("authForm");
+        authForm.addEventListener("submit", handleLogin);
+      }
+
+      function handleLogin(event) {
+        event.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        // Clear previous messages
+        hideMessages();
+
+        // Simulate authentication
+        if (
+          username === "testuser" &&
+          email === "test@example.com" &&
+          password === "password123"
+        ) {
+          // Successful login
+          const userData = {
+            username: username,
+            email: email,
+            displayName: "Test User",
+            userId: "12345",
+          };
+
+          authenticateUser(userData);
+          showSuccess("Login successful! Redirecting...");
+
+          setTimeout(() => {
+            showProtectedContent(userData);
+          }, 1000);
+        } else {
+          // Failed login
+          showError(
+            "Invalid credentials. Please check username, email, and password."
+          );
+        }
+      }
+
+      function authenticateUser(userData) {
+        isAuthenticated = true;
+
+        // Generate session data
+        const sessionId = generateSessionId();
+        const loginTime = new Date();
+        const expiryTime = new Date(loginTime.getTime() + 24 * 60 * 60 * 1000); // 24 hours
+
+        sessionData = {
+          sessionId: sessionId,
+          loginTime: loginTime,
+          expiryTime: expiryTime,
+          userData: userData,
+        };
+
+        // Store in localStorage (simulating session persistence)
+        localStorage.setItem("auth_token", sessionId);
+        localStorage.setItem("auth_expiry", expiryTime.getTime().toString());
+        localStorage.setItem("user_data", JSON.stringify(userData));
+
+        // Set session cookie
+        document.cookie = `session_id=${sessionId}; expires=${expiryTime.toUTCString()}; path=/`;
+        document.cookie = `auth_token=${generateToken()}; expires=${expiryTime.toUTCString()}; path=/`;
+      }
+
+      function showProtectedContent(userData) {
+        document.getElementById("loginForm").style.display = "none";
+        document.getElementById("protectedContent").style.display = "block";
+
+        // Populate user information
+        document.getElementById("displayName").textContent =
+          userData.displayName || userData.username;
+        document.getElementById("displayEmail").textContent = userData.email;
+        document.getElementById("userAvatar").textContent = (
+          userData.displayName || userData.username
+        )
+          .charAt(0)
+          .toUpperCase();
+        document.getElementById("userId").textContent = userData.userId;
+
+        // Populate session information
+        const sessionId = localStorage.getItem("auth_token");
+        const loginTime = new Date(
+          parseInt(localStorage.getItem("auth_expiry")) - 24 * 60 * 60 * 1000
+        );
+        const expiryTime = new Date(
+          parseInt(localStorage.getItem("auth_expiry"))
+        );
+
+        document.getElementById("sessionId").textContent = sessionId;
+        document.getElementById("loginTime").textContent =
+          loginTime.toLocaleString();
+        document.getElementById("expiryTime").textContent =
+          expiryTime.toLocaleString();
+        document.getElementById("lastLogin").textContent =
+          loginTime.toLocaleString();
+
+        // Add dynamic activity
+        updateActivity();
+
+        // Notify parent window if in iframe
+        try {
+          window.parent.postMessage(
+            {
+              type: "auth-success",
+              userData: userData,
+              sessionData: sessionData,
+            },
+            "*"
+          );
+        } catch (error) {
+          console.log("Not in iframe or cannot communicate with parent");
+        }
+      }
+
+      function showLoginForm() {
+        document.getElementById("loginForm").style.display = "block";
+        document.getElementById("protectedContent").style.display = "none";
+      }
+
+      function logout() {
+        isAuthenticated = false;
+        sessionData = {};
+
+        // Clear stored data
+        localStorage.removeItem("auth_token");
+        localStorage.removeItem("auth_expiry");
+        localStorage.removeItem("user_data");
+
+        // Clear cookies
+        document.cookie =
+          "session_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        document.cookie =
+          "auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
+        showLoginForm();
+        showSuccess("Successfully logged out");
+
+        // Clear form
+        document.getElementById("authForm").reset();
+
+        // Notify parent window
+        try {
+          window.parent.postMessage(
+            {
+              type: "auth-logout",
+            },
+            "*"
+          );
+        } catch (error) {
+          console.log("Not in iframe or cannot communicate with parent");
+        }
+      }
+
+      function updateActivity() {
+        const activities = [
+          "Logged in from Chrome Browser",
+          "Accessed dashboard",
+          "Updated profile settings",
+          "Viewed account summary",
+          "Downloaded report",
+          "Changed password",
+        ];
+
+        const activityList = document.getElementById("activityList");
+        activityList.innerHTML = "";
+
+        // Add random activities
+        const randomActivities = activities
+          .sort(() => 0.5 - Math.random())
+          .slice(0, 3);
+        randomActivities.forEach((activity) => {
+          const li = document.createElement("li");
+          li.textContent = `${activity} - ${new Date().toLocaleTimeString()}`;
+          activityList.appendChild(li);
+        });
+      }
+
+      function generateSessionId() {
+        return (
+          "sess_" +
+          Math.random().toString(36).substr(2, 16) +
+          Date.now().toString(36)
+        );
+      }
+
+      function generateToken() {
+        return "tok_" + Math.random().toString(36).substr(2, 32);
+      }
+
+      function showError(message) {
+        const errorDiv = document.getElementById("loginError");
+        errorDiv.textContent = message;
+        errorDiv.style.display = "block";
+      }
+
+      function showSuccess(message) {
+        const successDiv = document.getElementById("loginSuccess");
+        successDiv.textContent = message;
+        successDiv.style.display = "block";
+      }
+
+      function hideMessages() {
+        document.getElementById("loginError").style.display = "none";
+        document.getElementById("loginSuccess").style.display = "none";
+      }
+
+      // Listen for messages from parent (for testing)
+      window.addEventListener("message", function (event) {
+        console.log("Auth page received message:", event.data);
+
+        if (event.data.type === "scrape-request") {
+          // Respond with current page data
+          const response = {
+            type: "scrape-response",
+            payload: {
+              isAuthenticated: isAuthenticated,
+              currentView: isAuthenticated ? "protected" : "login",
+              title: document.title,
+              content: isAuthenticated
+                ? "Protected content visible"
+                : "Login form visible",
+              userData: isAuthenticated ? sessionData.userData : null,
+              timestamp: new Date().toISOString(),
+            },
+          };
+
+          event.source.postMessage(response, "*");
+        }
+      });
+
+      // Auto-logout after inactivity (for testing)
+      let inactivityTimer;
+      function resetInactivityTimer() {
+        clearTimeout(inactivityTimer);
+        if (isAuthenticated) {
+          inactivityTimer = setTimeout(() => {
+            logout();
+            showError("Session expired due to inactivity");
+          }, 300000); // 5 minutes
+        }
+      }
+
+      // Reset timer on user activity
+      document.addEventListener("click", resetInactivityTimer);
+      document.addEventListener("keypress", resetInactivityTimer);
+    </script>
+  </body>
+</html>

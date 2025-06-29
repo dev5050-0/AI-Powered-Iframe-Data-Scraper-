@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Iframe Loader Test Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="icon" type="image/png" href="./public/icon.png" />
+
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+
+      /* Reset and base */
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        padding: 40px 20px;
+        background-color: #f9fafb;
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+          sans-serif;
+        color: #333;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        min-height: 100vh;
+      }
+
+      .container {
+        background-color: #fff;
+        max-width: 1000px;
+        width: 100%;
+        border-radius: 12px;
+        padding: 40px 48px 36px 48px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border: 1px solid #e4e7eb;
+      }
+
+      h1 {
+        font-weight: 600;
+        font-size: 2.6rem;
+        margin: 0 0 18px 0;
+        letter-spacing: 0.3px;
+        color: #111827;
+        text-align: center;
+      }
+
+      .desc {
+        max-width: 600px;
+        font-size: 1.15rem;
+        color: #6b7280;
+        text-align: center;
+        line-height: 1.5;
+        margin-bottom: 36px;
+        user-select: none;
+      }
+
+      #loadIframeBtn {
+        padding: 14px 44px;
+        font-size: 1.15rem;
+        font-weight: 600;
+        border-radius: 8px;
+        border: 2px solid #3b82f6;
+        background-color: transparent;
+        color: #3b82f6;
+        cursor: pointer;
+        transition: background-color 0.25s ease, color 0.25s ease,
+          border-color 0.25s ease, transform 0.15s ease;
+        user-select: none;
+        outline-offset: 2px;
+      }
+
+      #loadIframeBtn:hover,
+      #loadIframeBtn:focus {
+        background-color: #3b82f6;
+        color: #fff;
+        border-color: #3b82f6;
+        transform: translateY(-2px);
+        outline: none;
+      }
+
+      #loadIframeBtn:active {
+        transform: translateY(0);
+      }
+
+      #iframeContainer {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 28px;
+        min-height: 120px;
+      }
+
+      iframe {
+        width: 800px;
+        height: 600px;
+        border-radius: 12px;
+        border: 1px solid #d1d5db;
+        background-color: #fff;
+        opacity: 0;
+        animation: fadeIn 0.7s forwards;
+        transition: border-color 0.3s ease;
+      }
+
+      iframe:focus {
+        outline: none;
+        border-color: #3b82f6;
+      }
+
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Responsive */
+
+      @media (max-width: 960px) {
+        .container {
+          padding: 28px 24px 28px 24px;
+        }
+
+        h1 {
+          font-size: 2.2rem;
+        }
+
+        #loadIframeBtn {
+          width: 100%;
+          padding: 14px 0;
+          font-size: 1.1rem;
+        }
+
+        iframe {
+          width: 100%;
+          height: 55vw;
+          max-height: 450px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .desc {
+          font-size: 1rem;
+          max-width: 100%;
+        }
+
+        h1 {
+          font-size: 1.8rem;
+        }
+      }
+      .iframe-btn-group {
+        display: flex;
+        gap: 16px;
+        margin-top: 18px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+      .iframe-btn {
+        padding: 12px 32px;
+        font-size: 1rem;
+        font-weight: 600;
+        border-radius: 8px;
+        border: 2px solid #3b82f6;
+        background-color: transparent;
+        color: #3b82f6;
+        cursor: pointer;
+        transition: background-color 0.25s, color 0.25s, border-color 0.25s,
+          transform 0.15s;
+        user-select: none;
+        outline-offset: 2px;
+      }
+      .iframe-btn.active,
+      .iframe-btn:focus {
+        background-color: #3b82f6;
+        color: #fff;
+        border-color: #3b82f6;
+        outline: none;
+      }
+      .iframe-btn:active {
+        transform: translateY(0);
+      }
+      .iframe-slot {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-top: 10px;
+        min-height: 120px;
+      }
+      iframe {
+        width: 800px;
+        height: 600px;
+        border-radius: 12px;
+        border: 1px solid #d1d5db;
+        background-color: #fff;
+        opacity: 0;
+        animation: fadeIn 0.7s forwards;
+        transition: border-color 0.3s;
+      }
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+      @media (max-width: 960px) {
+        iframe {
+          width: 100%;
+          height: 55vw;
+          max-height: 450px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container" role="main" aria-label="Iframe Loader Container">
+      <h1>Iframe Loader Page</h1>
+      <p class="desc">
+        Below are multiple buttons. Each button toggles its own iframe.<br />
+        The first iframe always has a special ID.
+      </p>
+      <div class="iframe-btn-group" id="iframeBtnGroup"></div>
+      <div id="iframeSlots"></div>
+
+      <iframe
+        src="https://www.material-tailwind.com/docs/react/installation"
+      ></iframe>
+      <!-- <iframe src="https://www.simplepractice.com/"></iframe> -->
+      <!-- <iframe src="https://www.wwe.com/"></iframe> -->
+    </div>
+
+    <script>
+      // Configuration
+      const BASE_URL = "http://127.0.0.1:5500";
+      // Different URLs for each iframe
+      const IFRAME_URLS = [
+        `${BASE_URL}/iframe.html`,
+        `${BASE_URL}/iframe2.html`,
+        `${BASE_URL}/iframe3.html`,
+      ];
+
+      const IFRAME_ID = "classic-full-encounter-summary-iframe";
+      const NUM_IFRAMES = IFRAME_URLS.length; // Number of buttons/iframes
+
+      const btnGroup = document.getElementById("iframeBtnGroup");
+      const slots = document.getElementById("iframeSlots");
+
+      // Render buttons and slots
+      for (let i = 1; i <= NUM_IFRAMES; i++) {
+        // Button
+        const btn = document.createElement("button");
+        btn.className = "iframe-btn";
+        btn.type = "button";
+        btn.setAttribute("aria-pressed", "false");
+        btn.dataset.idx = i;
+        btn.textContent =
+          i === 1 ? "Show Classic Summary" : `Show Summary ${i}`;
+        btnGroup.appendChild(btn);
+
+        // Slot for iframe
+        const slot = document.createElement("div");
+        slot.className = "iframe-slot";
+        slot.id = `iframe-slot-${i}`;
+        slots.appendChild(slot);
+
+        // Button click handler
+        btn.onclick = function () {
+          const slotDiv = document.getElementById(`iframe-slot-${i}`);
+          let existingIframe = slotDiv.querySelector("iframe");
+          if (existingIframe) {
+            // Hide
+            existingIframe.style.opacity = "0";
+            btn.disabled = true;
+            setTimeout(() => {
+              existingIframe.remove();
+              btn.textContent =
+                i === 1 ? "Show Classic Summary" : `Show Summary ${i}`;
+              btn.classList.remove("active");
+              btn.setAttribute("aria-pressed", "false");
+              btn.disabled = false;
+            }, 350);
+          } else {
+            // Show
+            const iframe = document.createElement("iframe");
+            iframe.src = IFRAME_URLS[i - 1]; // Use the specific URL for this button
+            if (i === 1) {
+              iframe.id = IFRAME_ID;
+              iframe.title = "AthenaNet-style Content";
+            } else {
+              iframe.id = `${IFRAME_ID}-${i}`;
+              iframe.title = `AthenaNet-style Content ${i}`;
+            }
+            iframe.classList.add("classic-iframe");
+            slotDiv.appendChild(iframe);
+            btn.textContent =
+              i === 1 ? "Hide Classic Summary" : `Hide Summary ${i}`;
+            btn.classList.add("active");
+            btn.setAttribute("aria-pressed", "true");
+          }
+        };
+      }
+    </script>
+  </body>
+</html>
